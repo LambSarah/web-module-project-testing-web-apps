@@ -66,10 +66,22 @@ test('renders all firstName, lastName and email text when submitted. Does NOT re
     const fname = screen.getAllByText(/sarah/i);
     expect(fname).toHaveLength(2);
     const lname = screen.getAllByText(/Guidry/i);
-    expect(lname).toHaveLength(2);
+    expect(lname).toHaveLength(1);
     expect(screen.getAllByText(/message/i)).toHaveLength(1);
 });
 
 test('renders all fields text when all fields are submitted.', async () => {
+    render(<ContactForm />);
+    userEvent.type(screen.getByPlaceholderText(/edd/i), 'Sarah');
+    userEvent.type(screen.getByPlaceholderText(/burke/i), 'Guidry');
+    userEvent.type(screen.getByPlaceholderText(/bluebill/i), 'sarah@help.com');
+    userEvent.type(screen.getByLabelText(/message/i), 'Turtles are fun!');
+    userEvent.click(screen.getByRole('button'));
+    const fname = screen.getAllByText(/sarah/i);
+    expect(fname).toHaveLength(2);
+    const lname = screen.getAllByText(/Guidry/i);
+    expect(lname).toHaveLength(1);
+    expect(screen.getAllByText(/message/i)).toHaveLength(2);
+
 
 });
